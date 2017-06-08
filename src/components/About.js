@@ -10,7 +10,7 @@ import Nancy from './aboutTabs/Nancy';
 
 const About = () => (
   <div className="main-content">
-    <PageHeader>About Us</PageHeader>
+    <PageHeader>About the Authors</PageHeader>
     <div className="text-center">
       <Tab.Container id="left-tabs-example" defaultActiveKey="first">
       <Row className="clearfix">

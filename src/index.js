@@ -17,9 +17,9 @@ import './stylesheets/index.css';
 
 
 //=============================================================\
-const blog = [];
+const data = {current: ''};
 const initialState = {
-  blog: blog,
+  data: data,
   modalVisible: false,
 };
 

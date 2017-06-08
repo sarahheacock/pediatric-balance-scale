@@ -27,6 +27,10 @@ body {
     color: black;
 }
 
+.nav-tabs > li.active > a:focus {
+    outline: 0;
+}
+
 footer {
   color: DimGray;
 }

@@ -37,7 +37,9 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="container-fluid">
-          <Header/>
+          <Header
+            makeModal={makeModal}
+          />
 
 
           <Switch>

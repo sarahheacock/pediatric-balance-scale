@@ -3,7 +3,7 @@ import { PageHeader } from 'react-bootstrap';
 
 const Journals = () => (
   <div className="main-content">
-    <PageHeader>Published Journals</PageHeader>
+    <PageHeader>Publications and Presentations</PageHeader>
   </div>
 );
 

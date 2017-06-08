@@ -13,9 +13,12 @@ export default function Admin(state={}, action){
     }
 
     case AdminActionTypes.FETCH_BLOG_SUCCESS: {
+      const Data = {
+        current: action.results
+      }
       return {
         ...state,
-        blog: action.results
+        data: Data
       }
     }
 

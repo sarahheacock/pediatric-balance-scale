@@ -12,24 +12,26 @@ const Header = (props) => {
         <Navbar>
           <Navbar.Header>
             <Navbar.Brand>
-              {"PT"}
+              {"PBS"}
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
 
           <Navbar.Collapse>
-            <Nav className="ml-auto" navbar>
-              <LinkContainer exact to="/">
+            <Nav className="ml-auto" onSelect={props.makeModal} navbar>
+
+              <LinkContainer exact to="/"  >
                 <NavItem>Home</NavItem>
               </LinkContainer>
               <LinkContainer to="/about">
-                <NavItem>About</NavItem>
+                <NavItem>Authors</NavItem>
               </LinkContainer>
               <LinkContainer to="/journal-articles">
-                <NavItem>Journals</NavItem>
+                <NavItem>Publications</NavItem>
               </LinkContainer>
+
               <LinkContainer to="/recent">
-                <NavItem>Events</NavItem>
+                <NavItem>News</NavItem>
               </LinkContainer>
 
             </Nav>

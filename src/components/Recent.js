@@ -1,9 +1,10 @@
 import React from 'react';
 import { PageHeader } from 'react-bootstrap';
 
-const Recent = () => (
+const Recent = (props) => (
   <div className="main-content">
-    <PageHeader>Recent Events</PageHeader>
+    <PageHeader>News and Events</PageHeader>
+
   </div>
 );
 
