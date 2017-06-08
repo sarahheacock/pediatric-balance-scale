@@ -17,10 +17,11 @@ import './stylesheets/index.css';
 
 
 //=============================================================\
-const data = {current: ''};
+const data = {current: []};
 const initialState = {
   data: data,
   modalVisible: false,
+  admin: false,
 };
 
 const store = createStore(

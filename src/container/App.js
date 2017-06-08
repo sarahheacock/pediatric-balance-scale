@@ -11,63 +11,93 @@ import * as AdminActionCreators from '../actions/admin';
 //components
 import Header from './Header';
 import Home from '../components/Home';
-import About from '../components/About';
-import Journals from '../components/Journals';
-import Recent from '../components/Recent';
+import Authors from '../components/Authors';
+import Research from '../components/Research';
+import Publications from '../components/Publications';
+import News from '../components/News';
 import Login from '../components/Login';
 import NotFound from '../components/NotFound';
 
+//var FontAwesome = require('react-fontawesome');
+//import FaBeer from 'react-icons/fa/beer';
+var FaLinked = require('react-icons/lib/fa/linkedin-square');
+var FaFacebook = require('react-icons/lib/fa/facebook-square');
 
 class App extends Component {
   static propTypes = {
-    blog: PropTypes.array.isRequired,
-    modalVisible: PropTypes.bool.isRequired
+    data: PropTypes.object.isRequired,
+    modalVisible: PropTypes.bool.isRequired,
+    admin: PropTypes.bool.isRequired
   }
 
   render(){
-    const{ dispatch, blog, modalVisible } = this.props;
+    const{ dispatch, data, modalVisible, admin } = this.props;
     //turns an object whose values are action creators (functions)
     //and wraps in dispatch (what causes state change)
     const makeModal = bindActionCreators(AdminActionCreators.makeModal, dispatch);
     const fetchBlog = bindActionCreators(AdminActionCreators.fetchBlog, dispatch);
 
-    console.log("blog", blog);
+    console.log("data", data);
     console.log("modalVisible", modalVisible);
 
     return (
       <BrowserRouter>
         <div className="container-fluid">
           <Header
-            makeModal={makeModal}
+            fetchBlog={fetchBlog}
           />
 
 
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/about" render={ () => (
-              <About
-
+            <Route exact path="/" render={ () => (
+              <Home
+                fetchBlog={fetchBlog}
+                data={data.current}
               />) }
             />
-            <Route path="/recent" render={ () => (
-              <Recent
-
+            <Route path="/authors" render={ () => (
+              <Authors
+                fetchBlog={fetchBlog}
+                data={data.current}
               />) }
             />
-            <Route path="/journal-articles" render={ () => (
-              <Journals
-
+            <Route path="/research" render={ () => (
+              <Research
+                fetchBlog={fetchBlog}
+                data={data.current}
+              />) }
+            />
+            <Route path="/news" render={ () => (
+              <News
+                fetchBlog={fetchBlog}
+                data={data.current}
+              />) }
+            />
+            <Route path="/publications" render={ () => (
+              <Publications
+                fetchBlog={fetchBlog}
+                data={data.current}
               />) }
             />
             <Route path="/login" render={ () => (
               <Login
-
+                fetchBlog={fetchBlog}
+                data={data.current}
               />) }
             />
 
             <Route component={NotFound} />
           </Switch>
-          <footer className="text-center">Contact us </footer>
+          <footer className="text-center"><h3>Around the Web</h3>
+            <h3>
+              <a className="icon" href="#">
+                <FaLinked />
+              </a>
+              <a className="icon" href="#">
+                <FaFacebook />
+              </a>
+            </h3>
+          </footer>
         </div>
 
       </BrowserRouter>
@@ -78,7 +108,8 @@ class App extends Component {
 
 const mapStateToProps = state => (
   {
-    blog: state.blog,
+    data: state.data,
+    admin: state.admin,
     modalVisible: state.modalVisible,
   }
 );

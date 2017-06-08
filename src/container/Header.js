@@ -9,7 +9,7 @@ const Header = (props) => {
 
     return (
       <div>
-        <Navbar>
+        <Navbar inverse className="navigation">
           <Navbar.Header>
             <Navbar.Brand>
               {"PBS"}
@@ -18,19 +18,21 @@ const Header = (props) => {
           </Navbar.Header>
 
           <Navbar.Collapse>
-            <Nav className="ml-auto" onSelect={props.makeModal} navbar>
+            <Nav className="ml-auto" navbar>
 
-              <LinkContainer exact to="/"  >
+              <LinkContainer exact to="/" >
                 <NavItem>Home</NavItem>
               </LinkContainer>
-              <LinkContainer to="/about">
+              <LinkContainer to="/authors" >
                 <NavItem>Authors</NavItem>
               </LinkContainer>
-              <LinkContainer to="/journal-articles">
+              <LinkContainer to="/research" >
+                <NavItem>Research</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/publications" >
                 <NavItem>Publications</NavItem>
               </LinkContainer>
-
-              <LinkContainer to="/recent">
+              <LinkContainer to="/news" >
                 <NavItem>News</NavItem>
               </LinkContainer>
 
@@ -49,5 +51,5 @@ const Header = (props) => {
 export default Header;
 
 Header.propTypes = {
-  login: PropTypes.object.isRequired
+  fetchBlog: PropTypes.func.isRequired
 }
