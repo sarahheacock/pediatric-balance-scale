@@ -21,7 +21,8 @@ const data = {current: []};
 const initialState = {
   data: data,
   modalVisible: false,
-  admin: false,
+  admin: {admin: false, id: {}},
+  errorMessage: {}
 };
 
 const store = createStore(

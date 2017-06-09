@@ -22,6 +22,21 @@ export default function Admin(state={}, action){
       }
     }
 
+    case AdminActionTypes.VERIFY_EMAIL_SUCCESS: {
+      return {
+        ...state,
+        admin: action.results,
+        errorMessage: {}
+      }
+    }
+
+    case AdminActionTypes.VERIFY_EMAIL_FAIL: {
+      return {
+        ...state,
+        errorMessage: action.results
+      }
+    }
+
     default:
       return state;
   }

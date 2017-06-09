@@ -4,7 +4,6 @@ import { Route, Redirect } from 'react-router-dom';
 import { Nav, NavItem, Tab, Row, Col, PageHeader } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import MaryRose from './aboutTabs/MaryRose';
 import Nancy from './aboutTabs/Nancy';
 
 
@@ -19,7 +18,7 @@ class Authors extends React.Component {
   }
 
   render(){
-
+//names are sorted in API to ensure 'nancy' always comes first
     return (
       <div className="main-content">
         <PageHeader>About the Authors</PageHeader>
@@ -48,7 +47,7 @@ class Authors extends React.Component {
               />
 
               <Route path="/authors/mary-rose" render={ () =>
-                <MaryRose
+                <Nancy
                   data={this.props.data[1]}
                 /> }
               />

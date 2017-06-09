@@ -31,3 +31,33 @@ export const fetchBlog = (data) => {
       });
   }
 };
+
+//=================AUTHENTICATION==================================================
+export const verifyEmailSuccess = (results) => {
+  return {
+    type: AdminActionTypes.VERIFY_EMAIL_SUCCESS,
+    results
+  };
+};
+
+export const verifyEmailFail = (results) => {
+  return {
+    type: AdminActionTypes.VERIFY_EMAIL_FAIL,
+    results
+  };
+};
+
+export const verifyEmail = (data) => {
+  return (dispatch) => {
+
+    return axios.get(`${url}/admin/${data.username}/${data.password}`)
+      .then(response => {
+        console.log("response data", response.data);
+        dispatch(verifyEmailSuccess(response.data));
+      })
+      .catch(error => {
+        dispatch(verifyEmailFail({"error": "username or email not found"}));
+        //throw(error);
+      });
+  }
+};

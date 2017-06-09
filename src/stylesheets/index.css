@@ -94,7 +94,6 @@ header {
 .well {
   background-image: linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 100%);
   margin-bottom: 0;
-
 }
 
 .content {
@@ -123,6 +122,11 @@ img{
 .icon {
   padding: 0.5%;
 }
+
+.link:hover{
+  color:DimGray;
+}
+
 footer {
   color: DimGray;
 

@@ -26,9 +26,6 @@ const Header = (props) => {
               <LinkContainer to="/authors" >
                 <NavItem>Authors</NavItem>
               </LinkContainer>
-              <LinkContainer to="/research" >
-                <NavItem>Research</NavItem>
-              </LinkContainer>
               <LinkContainer to="/publications" >
                 <NavItem>Publications</NavItem>
               </LinkContainer>
@@ -39,7 +36,7 @@ const Header = (props) => {
             </Nav>
             <Nav pullRight>
               <LinkContainer to="/login">
-                <NavItem>Login</NavItem>
+                <NavItem>{(props.admin) ? "Nancy" : "Login"}</NavItem>
               </LinkContainer>
             </Nav>
           </Navbar.Collapse>
@@ -51,5 +48,5 @@ const Header = (props) => {
 export default Header;
 
 Header.propTypes = {
-  fetchBlog: PropTypes.func.isRequired
+  admin: PropTypes.bool.isRequired
 }

@@ -10,9 +10,9 @@ import * as AdminActionCreators from '../actions/admin';
 
 //components
 import Header from './Header';
+import Footer from './Footer';
 import Home from '../components/Home';
 import Authors from '../components/Authors';
-import Research from '../components/Research';
 import Publications from '../components/Publications';
 import News from '../components/News';
 import Login from '../components/Login';
@@ -20,31 +20,34 @@ import NotFound from '../components/NotFound';
 
 //var FontAwesome = require('react-fontawesome');
 //import FaBeer from 'react-icons/fa/beer';
-var FaLinked = require('react-icons/lib/fa/linkedin-square');
-var FaFacebook = require('react-icons/lib/fa/facebook-square');
+
 
 class App extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
     modalVisible: PropTypes.bool.isRequired,
-    admin: PropTypes.bool.isRequired
+    admin: PropTypes.object.isRequired,
+    errorMessage: PropTypes.object.isRequired
   }
 
   render(){
-    const{ dispatch, data, modalVisible, admin } = this.props;
+    const{ dispatch, data, modalVisible, admin, errorMessage } = this.props;
     //turns an object whose values are action creators (functions)
     //and wraps in dispatch (what causes state change)
     const makeModal = bindActionCreators(AdminActionCreators.makeModal, dispatch);
     const fetchBlog = bindActionCreators(AdminActionCreators.fetchBlog, dispatch);
+    const verifyEmail = bindActionCreators(AdminActionCreators.verifyEmail, dispatch);
 
     console.log("data", data);
     console.log("modalVisible", modalVisible);
+    console.log("admin", admin);
+    console.log("errorMessage", errorMessage);
 
     return (
       <BrowserRouter>
         <div className="container-fluid">
           <Header
-            fetchBlog={fetchBlog}
+            admin={admin.admin}
           />
 
 
@@ -61,12 +64,7 @@ class App extends Component {
                 data={data.current}
               />) }
             />
-            <Route path="/research" render={ () => (
-              <Research
-                fetchBlog={fetchBlog}
-                data={data.current}
-              />) }
-            />
+
             <Route path="/news" render={ () => (
               <News
                 fetchBlog={fetchBlog}
@@ -81,23 +79,17 @@ class App extends Component {
             />
             <Route path="/login" render={ () => (
               <Login
-                fetchBlog={fetchBlog}
-                data={data.current}
+                errorMessage={errorMessage}
+                admin={admin}
+                verifyEmail={verifyEmail}
               />) }
             />
 
             <Route component={NotFound} />
           </Switch>
-          <footer className="text-center"><h3>Around the Web</h3>
-            <h3>
-              <a className="icon" href="#">
-                <FaLinked />
-              </a>
-              <a className="icon" href="#">
-                <FaFacebook />
-              </a>
-            </h3>
-          </footer>
+
+          <Footer />
+
         </div>
 
       </BrowserRouter>
@@ -111,6 +103,7 @@ const mapStateToProps = state => (
     data: state.data,
     admin: state.admin,
     modalVisible: state.modalVisible,
+    errorMessage: state.errorMessage
   }
 );
 
