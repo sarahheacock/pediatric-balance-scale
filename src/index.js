@@ -27,7 +27,7 @@ const initialState = {
   },
   messageSent: false,
   //CHANGE BACK LATER
-  admin: {admin: false, id: {}},
+  admin: {admin: false, id: "a"},
   errorMessage: {},
   selectedEdit: {
     data: {},
@@ -39,9 +39,28 @@ const initialState = {
   }
 };
 
+const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem('info', serializedState);
+  }
+  catch(err){
+
+  }
+};
+
+const initial = (localStorage.info !== undefined) ?
+      {...JSON.parse(localStorage.info)} :
+      initialState;
+
 const store = createStore(
-  AdminReducer, initialState, applyMiddleware(thunk)
+  AdminReducer, initial, applyMiddleware(thunk)
 );
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
+
 
 ReactDOM.render(
   <Provider store={store}>

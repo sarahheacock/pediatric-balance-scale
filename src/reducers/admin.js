@@ -76,12 +76,12 @@ export default function Admin(state={}, action){
     case AdminActionTypes.LOGOUT: {
       const newAdmin = {
         admin: false,
-        id: {}
+        id: "a"
       };
       return {
         ...state,
         admin: newAdmin,
-        errorMessage: {"error": "logged out"}
+        errorMessage: {"error": action.message}
       }
     }
 

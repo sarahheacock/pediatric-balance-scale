@@ -16,6 +16,7 @@ const Footer = (props) => (
       addBlog={props.addBlog}
       errorMessage={props.errorMessage}
       selectedAdd={props.selectedAdd}
+      admin={props.admin}
     />
     <EditModal
       makeModal={props.makeModal}
@@ -23,6 +24,7 @@ const Footer = (props) => (
       selectedEdit={props.selectedEdit}
       editBlog={props.editBlog}
       errorMessage={props.errorMessage}
+      admin={props.admin}
     />
     <MessageModal
       visible={props.visible}
@@ -30,16 +32,17 @@ const Footer = (props) => (
       sendMessage={props.sendMessage}
       messageSent={props.messageSent}
       errorMessage={props.errorMessage}
+
     />
     <Row className="clearfix">
       <Col sm={6}>
         <h3>Around the Web</h3>
         <h3>
           <a className="icon" href="https://www.linkedin.com/in/nancy-darr-968364b">
-            <FaLinked className="link" color={"#0077B5"} />
+            <FaLinked className="link falinked" />
           </a>
           <a className="icon" href="#">
-            <FaFacebook className="link" color={"#3b5998"}/>
+            <FaFacebook className="link fafacebook" />
           </a>
         </h3>
       </Col>
@@ -47,7 +50,7 @@ const Footer = (props) => (
         <h3>Get More Info</h3>
         <h3>
           <a href="#" onClick={() => props.makeModal({"message": true})}>
-            <FaEmail color={"4099FF"}/>
+            <FaEmail className="link faemail" />
           </a>
         </h3>
       </Col>
@@ -69,5 +72,6 @@ Footer.propTypes = {
   editVisible: PropTypes.bool.isRequired,
   addVisible: PropTypes.bool.isRequired,
   editBlog: PropTypes.func.isRequired,
-  addBlog: PropTypes.func.isRequired
+  addBlog: PropTypes.func.isRequired,
+  admin: PropTypes.object.isRequired
 };

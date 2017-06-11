@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import { Modal, Button, Form, FormControl, ControlLabel, FormGroup, Alert } from 'react-bootstrap';
 
 class EditModal extends React.Component {
@@ -9,6 +10,7 @@ class EditModal extends React.Component {
     selectedEdit: PropTypes.object.isRequired,
     editBlog: PropTypes.func.isRequired,
     errorMessage: PropTypes.object.isRequired,
+    admin: PropTypes.object.isRequired
   }
 
   constructor(props){
@@ -17,7 +19,8 @@ class EditModal extends React.Component {
     this.state = {
       input: props.selectedEdit.data,
       section: props.selectedEdit.section,
-      sectionID: props.selectedEdit.data._id
+      sectionID: props.selectedEdit.data._id,
+      id: props.admin.id
     }
   }
 
@@ -26,7 +29,8 @@ class EditModal extends React.Component {
       this.setState({
         input: nextProps.selectedEdit.data,
         section: nextProps.selectedEdit.section,
-        sectionID: nextProps.selectedEdit.data._id
+        sectionID: nextProps.selectedEdit.data._id,
+        id: nextProps.admin.id
       });
     }
   }
@@ -41,7 +45,8 @@ class EditModal extends React.Component {
     if(e) e.preventDefault();
     let results = {};
     (Object.keys(this.state.input)).forEach((k) => {
-      if(k === "carousel") results[k] = this.state["input"][k].split(',');
+      if(k === "carousel" && Array.isArray(this.state["input"][k]) && this.state["input"][k].length === 1) results[k] = this.state["input"][k][0].split(',');
+      else if(k === "carousel" && Array.isArray(this.state["input"][k]) === false) results[k] = this.state["input"][k][0].split(',');
       else if(k !== "_id") results[k] = this.state["input"][k]
     });
     this.props.editBlog({...this.state, input:results});
@@ -68,6 +73,8 @@ class EditModal extends React.Component {
                 name={k}
                 type="text"
                 value={
+                  Array.isArray(this.state["input"][k]) ?
+                  this.state["input"][k].toString() :
                   this.state["input"][k]
                 }
                 onChange={this.onFormChange}
@@ -76,6 +83,26 @@ class EditModal extends React.Component {
           );
         }
       });
+
+    const buttons = (this.props.admin.admin) ?
+      <div>
+        <Button className="edit" bsStyle="primary" type="submit">
+          Submit
+        </Button>
+        <Button className="edit" bsStyle="danger" onClick={this.pop}>
+          Cancel
+        </Button>
+      </div> :
+      <div>
+        <Button className="edit" bsStyle="info">
+          <NavLink className="select" to="/login" onClick={this.pop}>
+            Login Again
+          </NavLink>
+        </Button>
+        <Button className="edit" bsStyle="danger" onClick={this.pop}>
+          Cancel
+        </Button>
+      </div>
 
     return (
       <div>
@@ -89,12 +116,7 @@ class EditModal extends React.Component {
               {formItems}
               <div className="text-center">
                 {alert}
-                <Button className="edit" bsStyle="primary" type="submit">
-                  Submit
-                </Button>
-                <Button className="edit" bsStyle="danger" onClick={this.pop}>
-                  Cancel
-                </Button>
+                {buttons}
               </div>
             </Form>
           </Modal.Body>

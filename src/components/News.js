@@ -39,7 +39,7 @@ class News extends React.Component {
             <div className="text-center">
               {(this.props.admin.admin) ?
                 <div>
-                <Button className="edit" bsStyle="info" onClick={() => this.props.selectEdit({data:event, section:"news"})}>
+                <Button className="edit" bsStyle="info" onClick={() => this.props.selectEdit({data:event, section:"news", id:this.props.admin.id})}>
                   Edit
                 </Button>
                 <Button className="edit" bsStyle="danger" onClick={() => {

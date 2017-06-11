@@ -1,8 +1,8 @@
 import * as AdminActionTypes from '../actiontypes/admin';
 import axios from 'axios';
 
-const url = "https://peaceful-shelf-12195.herokuapp.com/content";
-const blogID = "593c0109b4dc481940c61cb2";
+const url = "https://peaceful-shelf-12195.herokuapp.com";
+const blogID = "593d5eca1e17e126ddff6d0a";
 
 
 export const makeModal = (vis) => {
@@ -34,10 +34,10 @@ export const fail = (results) => {
 };
 
 //===============MESSAGING===============================================
-export const sendMessageSuccess = (results) => {
+export const sendMessageSuccess = () => {
   return {
     type: AdminActionTypes.SEND_MESSAGE_SUCCESS,
-    results
+
   };
 };
 
@@ -45,17 +45,20 @@ export const sendMessageSuccess = (results) => {
 export const sendMessage = (data) => {
   return (dispatch) => {
     console.log(data);
-    return dispatch(sendMessageSuccess(data));
-    // return axios.get(`${url}/admin/${data.username}/${data.password}`)
-    //   .then(response => {
-    //     console.log("response data", response.data);
-    //     dispatch(sendMessage(response.data));
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     dispatch(fail({"error": "Message unable to send"}));
-    //     //throw(error);
-    //   });
+    //return dispatch(sendMessageSuccess(data));
+    return axios.post(`${url}/user/sayHello`,
+      {
+        message: `<h3>Hello, from ${data.name}</h3><p><b>Message: </b>${data.message}</p><br /><p><b>Contact: </b>${data.email} ${data.phone}</p>`
+      })
+      .then(response => {
+        console.log("response data", response.data);
+        dispatch(sendMessageSuccess());
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch(fail({"error": "Message unable to send"}));
+        //throw(error);
+      });
   }
 };
 
@@ -71,7 +74,7 @@ export const fetchBlogSuccess = (results) => {
 export const fetchBlog = (data) => {
   return (dispatch) => {
 
-    return axios.get(`${url}/${blogID}/${data}`)
+    return axios.get(`${url}/user/${blogID}/${data}`)
       .then(response => {
         console.log("response data", response.data);
         dispatch(fetchBlogSuccess(response.data));
@@ -83,12 +86,17 @@ export const fetchBlog = (data) => {
 };
 
 export const editBlog = (data) => {
+
   return (dispatch) => {
 
-    return axios.put(`${url}/${blogID}/${data.section}/${data.sectionID}`, {...data.input})
+    return axios.put(`${url}/api/admin/${blogID}/${data.section}/${data.sectionID}`, {
+      ...data.input,
+      token: data.id
+    })
       .then(response => {
         console.log("response data", response.data);
-        dispatch(fetchBlogSuccess(response.data));
+        if(response.data.success === false) dispatch(logout("Session expired. You are now logged out. Log back in again to continue editing."))
+        else dispatch(fetchBlogSuccess(response.data));
       })
       .catch(error => {
         throw(error);
@@ -99,10 +107,15 @@ export const editBlog = (data) => {
 export const addBlog = (data) => {
   return (dispatch) => {
 
-    return axios.post(`${url}/${blogID}/${data.section}`, {...data.input})
+    return axios.post(`${url}/api/admin/${blogID}/${data.section}`,
+      {
+        ...data.input,
+        token: data.id
+      })
       .then(response => {
         console.log("response data", response.data);
-        dispatch(fetchBlogSuccess(response.data));
+        if(response.data.success === false) dispatch(logout("Session expired. You are now logged out. Log back in again to continue editing."));
+        else dispatch(fetchBlogSuccess(response.data));
       })
       .catch(error => {
         throw(error);
@@ -113,10 +126,11 @@ export const addBlog = (data) => {
 export const deleteBlog = (data) => {
   return (dispatch) => {
 
-    return axios.delete(`${url}/${blogID}/${data.section}/${data.sectionID}`)
+    return axios.delete(`${url}/api/admin/${blogID}/${data.section}/${data.sectionID}?token=${data.id}`)
       .then(response => {
         console.log("response data", response.data);
-        dispatch(fetchBlogSuccess(response.data));
+        if(response.data.success === false) dispatch(logout("Session expired. You are now logged out. Log back in again to continue editing."))
+        else dispatch(fetchBlogSuccess(response.data));
       })
       .catch(error => {
         throw(error);
@@ -126,9 +140,11 @@ export const deleteBlog = (data) => {
 
 
 //=================AUTHENTICATION==================================================
-export const logout = () => {
+export const logout = (message) => {
+  if(message === "Session expired. You are now logged out. Log back in again to continue editing.") alert("Session expired");
   return {
     type: AdminActionTypes.LOGOUT,
+    message
   };
 };
 
@@ -139,17 +155,13 @@ export const verifyEmailSuccess = (results) => {
   };
 };
 
-// export const verifyEmailFail = (results) => {
-//   return {
-//     type: AdminActionTypes.VERIFY_EMAIL_FAIL,
-//     results
-//   };
-// };
-
 export const verifyEmail = (data) => {
   return (dispatch) => {
 
-    return axios.get(`${url}/admin/${data.username}/${data.password}`)
+    return axios.post(`${url}/api/login`, {
+      username: data.username,
+      password: data.password
+    })
       .then(response => {
         console.log("response data", response.data);
         dispatch(verifyEmailSuccess(response.data));

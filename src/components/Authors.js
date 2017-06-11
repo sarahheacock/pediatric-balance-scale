@@ -54,7 +54,7 @@ class Authors extends React.Component {
                 <Nancy
                   data={this.props.data[1]}
                   admin={this.props.admin}
-                  select={this.props.selectEdit}
+                  selectEdit={this.props.selectEdit}
                 /> }
               />
 

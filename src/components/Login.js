@@ -39,7 +39,7 @@ class Login extends React.Component {
         <div></div>;
 
     const logoutButton = (this.props.admin.admin) ?
-      <Button bsStyle="info" onClick={() => this.props.logout()}>
+      <Button bsStyle="primary" onClick={() => this.props.logout("You are logged out.")}>
         Logout
       </Button>:
       <div></div>;
@@ -56,13 +56,13 @@ class Login extends React.Component {
         <Form className="content alertMessage" onSubmit={this.verify}>
 
           <FormGroup controlId="formInlineName">
-            <ControlLabel>Username</ControlLabel>
-            <FormControl name="username" type="text" value={this.state.username} onChange={this.onFormChange}/>
+            <ControlLabel>Username *</ControlLabel>
+            <FormControl name="username" type="text" value={this.state.username} onChange={this.onFormChange} required/>
           </FormGroup>
 
           <FormGroup controlId="formInlineEmail">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl name="password" type="password" value={this.state.password} onChange={this.onFormChange}/>
+            <ControlLabel>Password *</ControlLabel>
+            <FormControl name="password" type="password" value={this.state.password} onChange={this.onFormChange} required/>
           </FormGroup>
 
           {alert}

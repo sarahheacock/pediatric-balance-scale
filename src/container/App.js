@@ -129,6 +129,7 @@ class App extends Component {
             errorMessage={errorMessage}
             addVisible={modalVisible.add}
             addBlog={addBlog}
+            admin={admin}
           />
         </div>
 

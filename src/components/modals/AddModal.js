@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import { Modal, Button, Form, FormControl, ControlLabel, FormGroup, Alert } from 'react-bootstrap';
 
 class AddModal extends React.Component {
@@ -8,7 +9,8 @@ class AddModal extends React.Component {
     makeModal: PropTypes.func.isRequired,
     addBlog: PropTypes.func.isRequired,
     errorMessage: PropTypes.object.isRequired,
-    selectedAdd: PropTypes.object.isRequired
+    selectedAdd: PropTypes.object.isRequired,
+    admin: PropTypes.object.isRequired,
   }
 
   constructor(props){
@@ -16,7 +18,8 @@ class AddModal extends React.Component {
 
     this.state = {
       input: props.selectedAdd.data,
-      section: props.selectedAdd.section
+      section: props.selectedAdd.section,
+      id: props.admin.id
     }
   }
 
@@ -24,7 +27,8 @@ class AddModal extends React.Component {
     if(nextProps.selectedAdd !== undefined) {
       this.setState({
         input: nextProps.selectedAdd.data,
-        section: nextProps.selectedAdd.section
+        section: nextProps.selectedAdd.section,
+        id: nextProps.admin.id
       });
     }
   }
@@ -73,6 +77,26 @@ class AddModal extends React.Component {
         }
       });
 
+    const buttons = (this.props.admin.admin) ?
+      <div>
+        <Button className="edit" bsStyle="primary" type="submit">
+          Submit
+        </Button>
+        <Button className="edit" bsStyle="danger" onClick={this.pop}>
+          Cancel
+        </Button>
+      </div> :
+      <div>
+        <Button className="edit" bsStyle="info">
+          <NavLink className="select" to="/login" onClick={this.pop}>
+            Login Again
+          </NavLink>
+        </Button>
+        <Button className="edit" bsStyle="danger" onClick={this.pop}>
+          Cancel
+        </Button>
+      </div>
+
     return (
       <div>
         <Modal show={this.props.addVisible}>
@@ -85,12 +109,7 @@ class AddModal extends React.Component {
               {formItems}
               <div className="text-center">
                 {alert}
-                <Button className="edit" bsStyle="primary" type="submit">
-                  Submit
-                </Button>
-                <Button className="edit" bsStyle="danger" onClick={this.pop}>
-                  Cancel
-                </Button>
+                {buttons}
               </div>
             </Form>
           </Modal.Body>

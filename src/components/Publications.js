@@ -31,7 +31,7 @@ class Publications extends React.Component {
                 <div className="well well-option">
                   <h3>{article.title}</h3>
                   <p>{article.description}</p>
-                  <p><b>{article.authors.join(', ')}</b></p>
+                  <p><b>{(Array.isArray(article.authors)) ? article.authors.join(', ') : article.authors}</b></p>
                   <p><b>{moment(article.date).format('LL')}</b></p>
                   <div className="text-center">
                     {(this.props.admin.admin) ?
@@ -40,7 +40,7 @@ class Publications extends React.Component {
                           Edit
                         </Button>
                         <Button className="edit" bsStyle="danger" onClick={() => {
-                          if(this.props.data.length > 1) this.props.deleteBlog({sectionID:article._id, section:"publications"});
+                          if(this.props.data.length > 1) this.props.deleteBlog({sectionID:article._id, section:"publications", id:this.props.admin.id});
                           else alert("You cannot delete all entries. Deleting all entries will cause errors");
                         }}>
                           Delete

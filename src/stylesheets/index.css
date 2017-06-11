@@ -125,8 +125,20 @@ img{
   padding: 0.5%;
 }
 
+.fafacebook{
+  color: #3b5998;
+}
+
+.falinked{
+  color: #0077B5;
+}
+
+.faemail{
+  color: rgb(64, 153, 255);
+}
+
 .link:hover{
-  color:DimGray;
+  color: DarkSlateGray;
 }
 
 footer {
@@ -161,4 +173,8 @@ footer {
 
 .edit{
   margin:1%;
+}
+
+.select{
+  color: white;
 }
