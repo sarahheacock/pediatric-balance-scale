@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
+import EditModal from '../modals/EditModal';
 
 const Nancy = (props) => {
+  const editButton = (props.admin.admin) ?
+    <Button bsStyle="info" onClick={() => props.selectEdit({data:props.data, section:"authors"})}>
+      Edit
+    </Button> :
+    <div></div>;
+
   return (
     <div className="main-content">
       <Row className="clearfix content">
@@ -20,11 +27,14 @@ const Nancy = (props) => {
           {(props.data === undefined) ? <div>Loading</div> : <img src={props.data.image}/>}
         </Col>
       </Row>
+      {editButton}
     </div>
   );
 };
 export default Nancy;
 
 Nancy.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  admin: PropTypes.object.isRequired,
+  selectEdit: PropTypes.func.isRequired
 }

@@ -5,6 +5,7 @@ import { PageHeader, Button, Form, FormControl, ControlLabel, FormGroup, Alert }
 class Login extends React.Component {
   static propTypes = {
     verifyEmail: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
     errorMessage: PropTypes.object.isRequired,
     admin: PropTypes.object.isRequired
   }
@@ -12,8 +13,6 @@ class Login extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      admin: props.admin,
-      errorMessage: props.errorMessage,
       username: '',
       password: ''
     };
@@ -34,23 +33,27 @@ class Login extends React.Component {
 
   render(){
     const alert = (Object.keys(this.props.errorMessage).length !== 0) ?
-      <Alert className="content text-center" bsStyle="warning">{this.props.errorMessage.error}</Alert> :
+      <Alert className="content text-center alertMessage" bsStyle="warning">{this.props.errorMessage.error}</Alert> :
       (this.props.admin.admin) ?
-        <Alert className="content text-center" bsStyle="success">"Welcome, Nancy"</Alert>:
+        <Alert className="content text-center alertMessage" bsStyle="success">"Welcome, Nancy"</Alert>:
         <div></div>;
 
-    const button = (this.props.admin.admin) ?
-      <Button bsStyle="secondary">
+    const logoutButton = (this.props.admin.admin) ?
+      <Button bsStyle="info" onClick={() => this.props.logout()}>
         Logout
-      </Button> :
+      </Button>:
+      <div></div>;
+
+    const loginButton = (this.props.admin.admin) ?
+      <div></div>:
       <Button bsStyle="primary" type="submit">
-        Submit
-      </Button>
+        Login
+      </Button>;
 
     return (
       <div className="main-content">
         <PageHeader>Admin Login</PageHeader>
-        <Form className="content" onSubmit={this.verify}>
+        <Form className="content alertMessage" onSubmit={this.verify}>
 
           <FormGroup controlId="formInlineName">
             <ControlLabel>Username</ControlLabel>
@@ -64,7 +67,8 @@ class Login extends React.Component {
 
           {alert}
           <div className="text-center">
-            {button}
+            {logoutButton}
+            {loginButton}
           </div>
         </Form>
 

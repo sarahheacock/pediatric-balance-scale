@@ -1,12 +1,37 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
+import MessageModal from '../components/modals/MessageModal';
+import EditModal from '../components/modals/EditModal';
+import AddModal from '../components/modals/AddModal';
 var FaLinked = require('react-icons/lib/fa/linkedin-square');
 var FaFacebook = require('react-icons/lib/fa/facebook-square');
 var FaEmail = require('react-icons/lib/fa/envelope');
 
-const Footer = () => (
-  <footer className="text-center">
-    <Row className="clearfix content">
+const Footer = (props) => (
+  <footer className="text-center content">
+    <AddModal
+      addVisible={props.addVisible}
+      makeModal={props.makeModal}
+      addBlog={props.addBlog}
+      errorMessage={props.errorMessage}
+      selectedAdd={props.selectedAdd}
+    />
+    <EditModal
+      makeModal={props.makeModal}
+      editVisible={props.editVisible}
+      selectedEdit={props.selectedEdit}
+      editBlog={props.editBlog}
+      errorMessage={props.errorMessage}
+    />
+    <MessageModal
+      visible={props.visible}
+      makeModal={props.makeModal}
+      sendMessage={props.sendMessage}
+      messageSent={props.messageSent}
+      errorMessage={props.errorMessage}
+    />
+    <Row className="clearfix">
       <Col sm={6}>
         <h3>Around the Web</h3>
         <h3>
@@ -19,15 +44,30 @@ const Footer = () => (
         </h3>
       </Col>
       <Col sm={6}>
-        <h3>Contact Us</h3>
+        <h3>Get More Info</h3>
         <h3>
-          <a href="#">
+          <a href="#" onClick={() => props.makeModal({"message": true})}>
             <FaEmail color={"4099FF"}/>
           </a>
         </h3>
       </Col>
     </Row>
   </footer>
+
 );
 
 export default Footer;
+
+Footer.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  makeModal: PropTypes.func.isRequired,
+  sendMessage: PropTypes.func.isRequired,
+  messageSent: PropTypes.bool.isRequired,
+  selectedAdd: PropTypes.string.isRequired,
+  errorMessage: PropTypes.object.isRequired,
+  selectedEdit: PropTypes.object.isRequired,
+  editVisible: PropTypes.bool.isRequired,
+  addVisible: PropTypes.bool.isRequired,
+  editBlog: PropTypes.func.isRequired,
+  addBlog: PropTypes.func.isRequired
+};

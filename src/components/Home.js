@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageHeader, Carousel } from 'react-bootstrap';
+import { PageHeader, Carousel, Button } from 'react-bootstrap';
+import EditModal from './modals/EditModal';
 
 class Home extends React.Component {
   static propTypes = {
-    data: PropTypes.object.isRequired,
-    fetchBlog: PropTypes.func.isRequired
+    data: PropTypes.array.isRequired,
+    fetchBlog: PropTypes.func.isRequired,
+    admin: PropTypes.bool.isRequired,
+    selectEdit: PropTypes.func.isRequired
   }
 
   componentWillMount(){
@@ -23,6 +26,11 @@ class Home extends React.Component {
             <img className="carouselImg" alt="900x500" src={image}/>
           </Carousel.Item>
         ));
+    const editButton = (this.props.admin) ?
+      <Button bsStyle="info" onClick={() => this.props.selectEdit({data:this.props.data[0], section:"home"})}>
+        Edit
+      </Button> :
+      <div></div>;
 
     return (
       <div>
@@ -36,7 +44,11 @@ class Home extends React.Component {
             <PageHeader>Home</PageHeader>
             <div className="content">
               {(this.props.data[0] === undefined) ? <p>Loading</p> : <p className="summary">{this.props.data[0]["summary"]}</p>}
+              <div className="text-center">
+                {editButton}
+              </div>
             </div>
+
           </div>
         </div>
       </div>

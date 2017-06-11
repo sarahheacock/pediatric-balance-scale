@@ -20,9 +20,23 @@ import './stylesheets/index.css';
 const data = {current: []};
 const initialState = {
   data: data,
-  modalVisible: false,
+  modalVisible: {
+    add: false,
+    edit: false,
+    message: false
+  },
+  messageSent: false,
+  //CHANGE BACK LATER
   admin: {admin: false, id: {}},
-  errorMessage: {}
+  errorMessage: {},
+  selectedEdit: {
+    data: {},
+    section: ""
+  },
+  selectedAdd: {
+    data: {},
+    section: ""
+  }
 };
 
 const store = createStore(

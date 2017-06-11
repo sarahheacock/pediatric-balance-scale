@@ -10,7 +10,9 @@ import Nancy from './aboutTabs/Nancy';
 class Authors extends React.Component {
   static propTypes = {
     data: PropTypes.array.isRequired,
-    fetchBlog: PropTypes.func.isRequired
+    fetchBlog: PropTypes.func.isRequired,
+    admin: PropTypes.object.isRequired,
+    selectEdit: PropTypes.func.isRequired
   }
 
   componentWillMount(){
@@ -32,7 +34,7 @@ class Authors extends React.Component {
                   <NavItem className="tab">Nancy Darr</NavItem>
                 </LinkContainer>
                 <LinkContainer to="/authors/mary-rose">
-                  <NavItem className="tab">Mary Rose</NavItem>
+                  <NavItem className="tab">Mary Rose Franjoine</NavItem>
                 </LinkContainer>
               </Nav>
 
@@ -43,12 +45,16 @@ class Authors extends React.Component {
               <Route path="/authors/nancy" render={ () =>
                 <Nancy
                   data={this.props.data[0]}
+                  admin={this.props.admin}
+                  selectEdit={this.props.selectEdit}
                 /> }
               />
 
               <Route path="/authors/mary-rose" render={ () =>
                 <Nancy
                   data={this.props.data[1]}
+                  admin={this.props.admin}
+                  select={this.props.selectEdit}
                 /> }
               />
 

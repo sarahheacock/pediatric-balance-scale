@@ -6,9 +6,51 @@ import * as AdminActionTypes from '../actiontypes/admin';
 export default function Admin(state={}, action){
   switch (action.type) {
     case AdminActionTypes.MAKE_MODAL: {
+      const newVis = {
+        ...state.modalVisible,
+        ...action.vis
+      };
       return {
         ...state,
-        modalVisible: !(state.modalVisible)
+        modalVisible: newVis,
+        messageSent: false,
+        errorMessage: {}
+      }
+    }
+
+    case AdminActionTypes.SELECT_EDIT: {
+      const newVis = {
+        ...state.modalVisible,
+        edit: true
+      };
+      return {
+        ...state,
+        modalVisible: newVis,
+        messageSent: false,
+        errorMessage: {},
+        selectedEdit: action.data,
+      }
+    }
+
+    case AdminActionTypes.SELECT_ADD: {
+      const newVis = {
+        ...state.modalVisible,
+        add: true
+      };
+      return {
+        ...state,
+        modalVisible: newVis,
+        messageSent: false,
+        errorMessage: {},
+        selectedAdd: action.data
+      }
+    }
+
+    case AdminActionTypes.SEND_MESSAGE_SUCCESS: {
+      return {
+        ...state,
+        messageSent: true,
+        errorMessage: {}
       }
     }
 
@@ -18,7 +60,8 @@ export default function Admin(state={}, action){
       }
       return {
         ...state,
-        data: Data
+        data: Data,
+        modalVisible: {"edit": false, "add": false, "message": false},
       }
     }
 
@@ -30,7 +73,19 @@ export default function Admin(state={}, action){
       }
     }
 
-    case AdminActionTypes.VERIFY_EMAIL_FAIL: {
+    case AdminActionTypes.LOGOUT: {
+      const newAdmin = {
+        admin: false,
+        id: {}
+      };
+      return {
+        ...state,
+        admin: newAdmin,
+        errorMessage: {"error": "logged out"}
+      }
+    }
+
+    case AdminActionTypes.FAIL: {
       return {
         ...state,
         errorMessage: action.results

@@ -18,6 +18,7 @@ import News from '../components/News';
 import Login from '../components/Login';
 import NotFound from '../components/NotFound';
 
+
 //var FontAwesome = require('react-fontawesome');
 //import FaBeer from 'react-icons/fa/beer';
 
@@ -25,23 +26,37 @@ import NotFound from '../components/NotFound';
 class App extends Component {
   static propTypes = {
     data: PropTypes.object.isRequired,
-    modalVisible: PropTypes.bool.isRequired,
+    modalVisible: PropTypes.object.isRequired,
     admin: PropTypes.object.isRequired,
-    errorMessage: PropTypes.object.isRequired
+    errorMessage: PropTypes.object.isRequired,
+    messageSent: PropTypes.bool.isRequired,
+    selectedEdit: PropTypes.object.isRequired,
+    selectedAdd: PropTypes.object.isRequired
   }
 
   render(){
-    const{ dispatch, data, modalVisible, admin, errorMessage } = this.props;
+    const{ dispatch, data, modalVisible, admin, errorMessage, messageSent, selectedEdit, selectedAdd } = this.props;
     //turns an object whose values are action creators (functions)
     //and wraps in dispatch (what causes state change)
     const makeModal = bindActionCreators(AdminActionCreators.makeModal, dispatch);
     const fetchBlog = bindActionCreators(AdminActionCreators.fetchBlog, dispatch);
     const verifyEmail = bindActionCreators(AdminActionCreators.verifyEmail, dispatch);
+    const sendMessage = bindActionCreators(AdminActionCreators.sendMessage, dispatch);
+    const editBlog = bindActionCreators(AdminActionCreators.editBlog, dispatch);
+    const addBlog = bindActionCreators(AdminActionCreators.addBlog, dispatch);
+    const deleteBlog = bindActionCreators(AdminActionCreators.deleteBlog, dispatch);
+    const selectEdit = bindActionCreators(AdminActionCreators.selectEdit, dispatch);
+    const selectAdd = bindActionCreators(AdminActionCreators.selectAdd, dispatch);
+    const logout = bindActionCreators(AdminActionCreators.logout, dispatch);
+
 
     console.log("data", data);
     console.log("modalVisible", modalVisible);
     console.log("admin", admin);
     console.log("errorMessage", errorMessage);
+    console.log("messageSent", messageSent);
+    console.log("selectedEdit", selectedEdit);
+    console.log("selectedAdd", selectedAdd);
 
     return (
       <BrowserRouter>
@@ -56,12 +71,16 @@ class App extends Component {
               <Home
                 fetchBlog={fetchBlog}
                 data={data.current}
+                admin={admin.admin}
+                selectEdit={selectEdit}
               />) }
             />
             <Route path="/authors" render={ () => (
               <Authors
                 fetchBlog={fetchBlog}
                 data={data.current}
+                admin={admin}
+                selectEdit={selectEdit}
               />) }
             />
 
@@ -69,12 +88,20 @@ class App extends Component {
               <News
                 fetchBlog={fetchBlog}
                 data={data.current}
+                admin={admin}
+                selectEdit={selectEdit}
+                deleteBlog={deleteBlog}
+                selectAdd={selectAdd}
               />) }
             />
             <Route path="/publications" render={ () => (
               <Publications
                 fetchBlog={fetchBlog}
                 data={data.current}
+                admin={admin}
+                selectEdit={selectEdit}
+                selectAdd={selectAdd}
+                deleteBlog={deleteBlog}
               />) }
             />
             <Route path="/login" render={ () => (
@@ -82,14 +109,27 @@ class App extends Component {
                 errorMessage={errorMessage}
                 admin={admin}
                 verifyEmail={verifyEmail}
+                logout={logout}
               />) }
             />
 
             <Route component={NotFound} />
           </Switch>
 
-          <Footer />
 
+          <Footer
+            visible={modalVisible.message}
+            makeModal={makeModal}
+            sendMessage={sendMessage}
+            messageSent={messageSent}
+            editVisible={modalVisible.edit}
+            selectedEdit={selectedEdit}
+            selectedAdd={selectedAdd}
+            editBlog={editBlog}
+            errorMessage={errorMessage}
+            addVisible={modalVisible.add}
+            addBlog={addBlog}
+          />
         </div>
 
       </BrowserRouter>
@@ -103,7 +143,10 @@ const mapStateToProps = state => (
     data: state.data,
     admin: state.admin,
     modalVisible: state.modalVisible,
-    errorMessage: state.errorMessage
+    errorMessage: state.errorMessage,
+    messageSent: state.messageSent,
+    selectedEdit: state.selectedEdit,
+    selectedAdd: state.selectedAdd
   }
 );
 
