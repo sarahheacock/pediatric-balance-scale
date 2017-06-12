@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 
 //redux
@@ -9,14 +9,10 @@ import { connect } from 'react-redux';
 import * as AdminActionCreators from '../actions/admin';
 
 //components
+import Routes from './Routes';
 import Header from './Header';
 import Footer from './Footer';
-import Home from '../components/Home';
-import Authors from '../components/Authors';
-import Publications from '../components/Publications';
-import News from '../components/News';
-import Login from '../components/Login';
-import NotFound from '../components/NotFound';
+
 
 
 //var FontAwesome = require('react-fontawesome');
@@ -65,57 +61,17 @@ class App extends Component {
             admin={admin.admin}
           />
 
-
-          <Switch>
-            <Route exact path="/" render={ () => (
-              <Home
-                fetchBlog={fetchBlog}
-                data={data.current}
-                admin={admin.admin}
-                selectEdit={selectEdit}
-              />) }
-            />
-            <Route path="/authors" render={ () => (
-              <Authors
-                fetchBlog={fetchBlog}
-                data={data.current}
-                admin={admin}
-                selectEdit={selectEdit}
-              />) }
-            />
-
-            <Route path="/news" render={ () => (
-              <News
-                fetchBlog={fetchBlog}
-                data={data.current}
-                admin={admin}
-                selectEdit={selectEdit}
-                deleteBlog={deleteBlog}
-                selectAdd={selectAdd}
-              />) }
-            />
-            <Route path="/publications" render={ () => (
-              <Publications
-                fetchBlog={fetchBlog}
-                data={data.current}
-                admin={admin}
-                selectEdit={selectEdit}
-                selectAdd={selectAdd}
-                deleteBlog={deleteBlog}
-              />) }
-            />
-            <Route path="/login" render={ () => (
-              <Login
-                errorMessage={errorMessage}
-                admin={admin}
-                verifyEmail={verifyEmail}
-                logout={logout}
-              />) }
-            />
-
-            <Route component={NotFound} />
-          </Switch>
-
+          <Routes
+            fetchBlog={fetchBlog}
+            data={data.current}
+            admin={admin}
+            selectEdit={selectEdit}
+            selectAdd={selectAdd}
+            deleteBlog={deleteBlog}
+            errorMessage={errorMessage}
+            verifyEmail={verifyEmail}
+            logout={logout}
+          />
 
           <Footer
             visible={modalVisible.message}

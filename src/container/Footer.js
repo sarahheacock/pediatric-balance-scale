@@ -38,7 +38,7 @@ const Footer = (props) => (
       <Col sm={6}>
         <h3>Around the Web</h3>
         <h3>
-          <a className="icon" href="https://www.linkedin.com/in/nancy-darr-968364b">
+          <a className="icon" href="#" onClick={(e) => {if(e) e.preventDefault(); window.open("https://www.linkedin.com/in/nancy-darr-968364b");}}>
             <FaLinked className="link falinked" />
           </a>
           <a className="icon" href="#">
@@ -58,6 +58,9 @@ const Footer = (props) => (
   </footer>
 
 );
+
+//<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
 
 export default Footer;
 

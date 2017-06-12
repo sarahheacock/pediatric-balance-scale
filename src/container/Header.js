@@ -1,11 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem, Image } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import slide from './slider.svg';
 
 //navigation bar
 const Header = (props) => {
+  // <Image
+  //   style={{width: 70, height: 70}}
+  //   src={slide}
+  // />
 
     return (
       <div>

@@ -17,55 +17,61 @@ import './stylesheets/index.css';
 
 
 //=============================================================\
-const data = {current: []};
-const initialState = {
-  data: data,
-  modalVisible: {
-    add: false,
-    edit: false,
-    message: false
-  },
-  messageSent: false,
-  //CHANGE BACK LATER
-  admin: {admin: false, id: "a"},
-  errorMessage: {},
-  selectedEdit: {
-    data: {},
-    section: ""
-  },
-  selectedAdd: {
-    data: {},
-    section: ""
-  }
-};
+//const Render = () => {
 
-const saveState = (state) => {
-  try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem('info', serializedState);
-  }
-  catch(err){
+  const data = {current: []};
+  const initialState = {
+    data: data,
+    modalVisible: {
+      add: false,
+      edit: false,
+      message: false
+    },
+    messageSent: false,
+    //CHANGE BACK LATER
+    admin: {admin: false, id: "a"},
+    errorMessage: {},
+    selectedEdit: {
+      data: {},
+      section: ""
+    },
+    selectedAdd: {
+      data: {},
+      section: ""
+    }
+  };
 
-  }
-};
+  const saveState = (state) => {
+    try {
+      const serializedState = JSON.stringify(state);
+      localStorage.setItem('info', serializedState);
+    }
+    catch(err){
 
-const initial = (localStorage.info !== undefined) ?
-      {...JSON.parse(localStorage.info)} :
-      initialState;
+    }
+  };
 
-const store = createStore(
-  AdminReducer, initial, applyMiddleware(thunk)
-);
+  const initial = (localStorage.info !== undefined) ?
+        {...JSON.parse(localStorage.info)} :
+        initialState;
 
-store.subscribe(() => {
-  saveState(store.getState());
-});
+  const store = createStore(
+    AdminReducer, initial, applyMiddleware(thunk)
+  );
+
+  store.subscribe(() => {
+      saveState(store.getState());
+    });
 
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
-);
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root')
+  );
+//}
+
+//Render();
+//export default Render;
 //registerServiceWorker();
