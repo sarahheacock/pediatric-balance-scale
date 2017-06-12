@@ -18,13 +18,14 @@ class Publications extends React.Component {
     this.props.fetchBlog("publications");
   }
 
+
   render(){
 
     const pubs = (this.props.data === undefined) ?
       <div>Loading</div> :
       this.props.data.map((article, index) => (
         <div key={`article${index}`}>
-          <a href={article.link}>
+          <a href="#" onClick={(e) => { if(e && this.props.admin.admin) e.preventDefault(); else window.open(article.link)}}>
             {(article.authors === undefined) ?
               <div>Loading</div>:
               <div className="content">
